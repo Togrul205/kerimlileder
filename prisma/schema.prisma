@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  slug     String    @unique
+  nameAz   String
+  nameDe   String
+  products Product[]
+}
+
+model Product {
+  id            String           @id @default(cuid())
+  slug          String           @unique
+  nameAz        String
+  nameDe        String
+  descriptionAz String
+  descriptionDe String
+  featured      Boolean          @default(false)
+  categoryId    String
+  category      Category         @relation(fields: [categoryId], references: [id])
+  images        ProductImage[]
+  variants      ProductVariant[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  url       String
+  altAz     String
+  altDe     String
+  sortOrder Int     @default(0)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductVariant {
+  id         String      @id @default(cuid())
+  nameAz     String
+  nameDe     String
+  color      String?
+  price      Int
+  stock      Int         @default(0)
+  sku        String?
+  productId  String
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+}
+
+model Customer {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  name       String
+  phone      String
+  address    String
+  city       String
+  postalCode String
+  country    String
+  notes      String   @default("")
+  orders     Order[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  email         String
+  name          String
+  phone         String
+  address       String
+  city          String
+  postalCode    String
+  country       String
+  shippingCents Int
+  totalCents    Int
+  status        String      @default("pending")
+  paymentMethod String
+  paymentId     String?
+  locale        String      @default("de")
+  notes         String      @default("")
+  customerId    String?
+  customer      Customer?   @relation(fields: [customerId], references: [id])
+  items         OrderItem[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model OrderItem {
+  id          String         @id @default(cuid())
+  orderId     String
+  order       Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variantId   String
+  variant     ProductVariant @relation(fields: [variantId], references: [id])
+  productName String
+  variantName String
+  quantity    Int
+  unitPrice   Int
+}
