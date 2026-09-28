@@ -3,12 +3,11 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.orderItem.deleteMany();
-  await prisma.order.deleteMany();
-  await prisma.productImage.deleteMany();
-  await prisma.productVariant.deleteMany();
-  await prisma.product.deleteMany();
-  await prisma.category.deleteMany();
+  const existing = await prisma.product.count();
+  if (existing > 0) {
+    console.log(`Database already has ${existing} products — skip seed.`);
+    return;
+  }
 
   const wallets = await prisma.category.create({
     data: { slug: "wallets", nameAz: "Pul kisələri", nameDe: "Geldbörsen" },

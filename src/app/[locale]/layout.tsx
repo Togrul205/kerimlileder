@@ -7,6 +7,8 @@ import { routing } from "@/i18n/routing";
 import { CartProvider } from "@/components/CartProvider";
 import { StoreChrome } from "@/components/StoreChrome";
 
+export const dynamic = "force-dynamic";
+
 const serif = Cormorant_Garamond({
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600"],
