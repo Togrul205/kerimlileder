@@ -9,11 +9,13 @@ export function AdminLoginForm({ locale }: { locale: string }) {
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const password = String(new FormData(e.currentTarget).get("password") || "");
+    const form = new FormData(e.currentTarget);
+    const username = String(form.get("username") || "");
+    const password = String(form.get("password") || "");
     const res = await fetch("/api/admin/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ username, password }),
     });
     if (!res.ok) {
       setError(t("invalid"));
@@ -28,8 +30,17 @@ export function AdminLoginForm({ locale }: { locale: string }) {
       <h1 className="mt-2 font-serif text-4xl">{t("login")}</h1>
       <form onSubmit={onSubmit} className="mt-8 space-y-4">
         <input
+          name="username"
+          type="text"
+          autoComplete="username"
+          required
+          placeholder={t("username")}
+          className="field"
+        />
+        <input
           name="password"
           type="password"
+          autoComplete="current-password"
           required
           placeholder={t("password")}
           className="field"

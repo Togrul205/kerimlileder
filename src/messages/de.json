@@ -169,6 +169,7 @@
   },
   "admin": {
     "login": "Admin-Login",
+    "username": "Benutzername",
     "password": "Passwort",
     "submit": "Anmelden",
     "logout": "Abmelden",
@@ -182,7 +183,7 @@
     "save": "Speichern",
     "delete": "Löschen",
     "status": "Status",
-    "invalid": "Falsches Passwort.",
+    "invalid": "Benutzername oder Passwort ist falsch.",
     "revenue": "Umsatz",
     "lowStock": "Wenig Bestand",
     "recentOrders": "Letzte Bestellungen",

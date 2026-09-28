@@ -169,6 +169,7 @@
   },
   "admin": {
     "login": "Admin giriş",
+    "username": "İstifadəçi adı",
     "password": "Şifrə",
     "submit": "Daxil ol",
     "logout": "Çıxış",
@@ -182,7 +183,7 @@
     "save": "Yadda saxla",
     "delete": "Sil",
     "status": "Status",
-    "invalid": "Şifrə yanlışdır.",
+    "invalid": "İstifadəçi adı və ya şifrə yanlışdır.",
     "revenue": "Gəlir",
     "lowStock": "Az stok",
     "recentOrders": "Son sifarişlər",
